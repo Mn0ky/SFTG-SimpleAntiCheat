@@ -40,9 +40,11 @@ namespace SimpleAntiCheat
 
         public static void OnServerCreatedMethodPostfix(ref LobbyCreated_t param, ref bool bIOFailure)
         {
-            SteamMatchmaking.SetLobbyData(new CSteamID(param.m_ulSteamIDLobby), StickFightConstants.VERSION_KEY, Plugin.Guid);
-            string lobbyData = SteamMatchmaking.GetLobbyData(new CSteamID(param.m_ulSteamIDLobby), StickFightConstants.VERSION_KEY);
-            Debug.Log("Created lobby of ver: " + lobbyData);
+            CSteamID lobbyID = new(param.m_ulSteamIDLobby);
+
+            SteamMatchmaking.SetLobbyData(lobbyID, StickFightConstants.VERSION_KEY, Plugin.Guid);
+            string lobbyData = SteamMatchmaking.GetLobbyData(lobbyID, StickFightConstants.VERSION_KEY);
+            Debug.Log("Created lobby of version: " + lobbyData);
         }
     }
 }
