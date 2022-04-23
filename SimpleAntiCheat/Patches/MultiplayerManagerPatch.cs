@@ -35,7 +35,21 @@ namespace SimpleAntiCheat
                 return false;
             }
 
-            return true;
+            var initMethod = AccessTools.Method(typeof(MatchmakingHandler), "ClientInitLobbyAndOwner");
+            initMethod.Invoke(MatchmakingHandler.Instance, new object[] {lobbyID});
+
+            ELobbyType newLobbyType = (ELobbyType)Enum.Parse(typeof(ELobbyType), SteamMatchmaking.GetLobbyData(lobbyID, StickFightConstants.LOBBY_TYPE_KEY));
+            MatchmakingHandler.SetNewLobbyType(newLobbyType);
+
+            int numLobbyMembers = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
+            for (int i = 0; i < numLobbyMembers; i++)
+            {
+                CSteamID lobbyMemberByIndex = SteamMatchmaking.GetLobbyMemberByIndex(lobbyID, i);
+                P2PPackageHandler.Instance.SendP2PPacketToUser(lobbyMemberByIndex, new byte[0], P2PPackageHandler.MsgType.Ping);
+            }
+
+            __instance.OnSceneStarted();
+            return false;
         }
 
         public static void OnServerCreatedMethodPostfix(ref LobbyCreated_t param, ref bool bIOFailure)
