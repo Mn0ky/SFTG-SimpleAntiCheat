@@ -38,7 +38,7 @@ namespace SimpleAntiCheat
             var initMethod = AccessTools.Method(typeof(MatchmakingHandler), "ClientInitLobbyAndOwner");
             initMethod.Invoke(MatchmakingHandler.Instance, new object[] {lobbyID});
 
-            ELobbyType newLobbyType = (ELobbyType)Enum.Parse(typeof(ELobbyType), SteamMatchmaking.GetLobbyData(lobbyID, StickFightConstants.LOBBY_TYPE_KEY));
+            ELobbyType newLobbyType = (ELobbyType) Enum.Parse(typeof(ELobbyType), SteamMatchmaking.GetLobbyData(lobbyID, StickFightConstants.LOBBY_TYPE_KEY));
             MatchmakingHandler.SetNewLobbyType(newLobbyType);
 
             int numLobbyMembers = SteamMatchmaking.GetNumLobbyMembers(lobbyID);

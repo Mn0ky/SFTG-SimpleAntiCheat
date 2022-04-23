@@ -8,7 +8,7 @@ namespace SimpleAntiCheat
     [BepInProcess("StickFight.exe")]
     public class Plugin : BaseUnityPlugin
     {
-        public const string VersionNumber = "1.0.0"; // Version string of plugin
+        public const string VersionNumber = "1.0.1"; // Version string of plugin
         public const string Guid = "monky.plugins.SimpleAntiCheat";
 
         private void Awake()
